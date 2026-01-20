@@ -63,9 +63,7 @@ export class AuthService {
       .digest('hex');
 
     const expiresAt = new Date();
-    expiresAt.setDate(
-      expiresAt.getDate() + this.refreshTokenTtlDays,
-    );
+    expiresAt.setDate(expiresAt.getDate() + this.refreshTokenTtlDays);
 
     await this.refreshTokens.create({
       userId: user.id,
@@ -80,7 +78,7 @@ export class AuthService {
     };
   }
 
-  //refresh 
+  //refresh
   async refresh(refreshTokenPlain: string) {
     const tokenHash = crypto
       .createHash('sha256')
@@ -117,9 +115,7 @@ export class AuthService {
       .digest('hex');
 
     const expiresAt = new Date();
-    expiresAt.setDate(
-      expiresAt.getDate() + this.refreshTokenTtlDays,
-    );
+    expiresAt.setDate(expiresAt.getDate() + this.refreshTokenTtlDays);
 
     await this.refreshTokens.create({
       userId: user.id,

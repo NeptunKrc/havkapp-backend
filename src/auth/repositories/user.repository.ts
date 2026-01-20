@@ -14,7 +14,7 @@ export class UserRepository {
   findForLogin(studentNo: string): Promise<User | null> {
     return this.repo
       .createQueryBuilder('user')
-      .addSelect('user.passwordHash') 
+      .addSelect('user.passwordHash')
       .where('user.studentNo = :studentNo', { studentNo })
       .getOne();
   }

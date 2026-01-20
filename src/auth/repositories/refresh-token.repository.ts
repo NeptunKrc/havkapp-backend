@@ -20,7 +20,6 @@ export class RefreshTokenRepository {
     tokenHash: string;
     expiresAt: Date;
   }): Promise<RefreshToken> {
-
     const token = this.repo.create(data);
     return this.repo.save(token);
   }
@@ -31,8 +30,6 @@ export class RefreshTokenRepository {
     await this.repo.delete({ expiresAt: LessThan(now) });
   }
   async deleteByTokenHash(tokenHash: string): Promise<void> {
-  await this.repo.delete({ tokenHash });
-}
-
-  
+    await this.repo.delete({ tokenHash });
+  }
 }

@@ -19,20 +19,15 @@ import { RefreshTokenRepository } from './repositories/refresh-token.repository'
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         secret: config.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '15m' },
+        expiresIn: `${config.get('JWT_ACCESS_TTL_SECONDS')}s`,
       }),
     }),
     ClubsModule,
     TypeOrmModule.forFeature([User, RefreshToken]),
   ],
 
-  providers: [
-    AuthService,
-    UserRepository,
-    JwtStrategy,
-    RefreshTokenRepository,
-  ],
+  providers: [AuthService, UserRepository, JwtStrategy, RefreshTokenRepository],
 
   controllers: [AuthController],
 })
-export class AuthModule {}
+export class AuthModule { }
