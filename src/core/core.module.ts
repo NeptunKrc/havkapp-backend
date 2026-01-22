@@ -12,4 +12,4 @@ import { InMemoryEventBus } from './events/in-memory-event-bus';
   ],
   exports: [EventBus],
 })
-export class CoreModule { }
+export class CoreModule {}

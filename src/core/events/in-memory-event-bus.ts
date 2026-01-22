@@ -1,8 +1,9 @@
 import { DomainEvent } from './domain-event';
 import { EventBus } from './event-bus';
 
-type EventHandler<T extends DomainEvent = DomainEvent> =
-  (event: T) => void | Promise<void>;
+type EventHandler<T extends DomainEvent = DomainEvent> = (
+  event: T,
+) => void | Promise<void>;
 
 export class InMemoryEventBus extends EventBus {
   private readonly handlers = new Map<string, EventHandler[]>();

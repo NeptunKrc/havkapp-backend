@@ -41,7 +41,6 @@ export class NotificationListener {
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
   ) {
-  
     this.eventBus.subscribe('ACTIVITY_CREATED', this.handle.bind(this));
     this.eventBus.subscribe('ACTIVITY_STARTED', this.handle.bind(this));
     this.eventBus.subscribe('ACTIVITY_COMPLETED', this.handle.bind(this));
@@ -63,7 +62,7 @@ export class NotificationListener {
 
     const notification = await this.notificationRepo.save(
       this.notificationRepo.create({
-        template, 
+        template,
         title,
         body,
         createdByUserId: payload.createdByUserId ?? null,
@@ -71,7 +70,6 @@ export class NotificationListener {
         relatedEntityId: payload.relatedEntityId,
       }),
     );
-
 
     const userWhere: any = {
       clubId: payload.clubId,

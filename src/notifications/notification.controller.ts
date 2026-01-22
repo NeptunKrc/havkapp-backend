@@ -25,9 +25,7 @@ import { NotificationResponseDto } from './dto/notification-response.dto';
 @UseGuards(AuthGuard('jwt'))
 @Controller('notifications')
 export class NotificationController {
-  constructor(
-    private readonly notificationRepo: NotificationRepository,
-  ) {}
+  constructor(private readonly notificationRepo: NotificationRepository) {}
 
   //Kullanıcının bildirimlerini al
   @Get()
@@ -49,9 +47,8 @@ export class NotificationController {
     });
   }
 
-  
   //Bildirimi okundu işaretle
-   
+
   @Patch(':id/read')
   @ApiOperation({
     summary: 'Mark notification as read',
@@ -65,16 +62,13 @@ export class NotificationController {
     await this.notificationRepo.markAsRead(userId, notificationId);
   }
 
-  
   //Okunmamış bildirim sayı
 
   @Get('unread-count')
   @ApiOperation({
     summary: 'Get unread notification count',
   })
-  async unreadCount(
-    @Req() req: any,
-  ): Promise<{ count: number }> {
+  async unreadCount(@Req() req: any): Promise<{ count: number }> {
     const userId = req.user.sub;
 
     const count = await this.notificationRepo.unreadCount(userId);

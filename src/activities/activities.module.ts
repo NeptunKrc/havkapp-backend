@@ -19,9 +19,7 @@ import { ActivityResponsibilityCode } from './entities/activity-responsibility-c
     ]),
   ],
   controllers: [ActivitiesController],
-  providers: [
-    ActivitiesService,
-  ],
+  providers: [ActivitiesService],
   exports: [ActivitiesService],
 })
-export class ActivitiesModule { }
+export class ActivitiesModule {}

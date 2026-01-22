@@ -10,9 +10,12 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-import { obligation_type_enum, activity_status_enum } from '../entities/activity.enums';
+import {
+  obligation_type_enum,
+  activity_status_enum,
+} from '../entities/activity.enums';
 
-const TIME_24H_REGEX = /^([01]\d|2[0-3]):([0-5]\d)$/;  //time formatı hesaplamada sıkıntı çıkmasın diye
+const TIME_24H_REGEX = /^([01]\d|2[0-3]):([0-5]\d)$/; //time formatı hesaplamada sıkıntı çıkmasın diye
 
 export class CreateActivityDto {
   @ApiProperty({ example: 'Yamaç Paraşütü Eğitimi' })

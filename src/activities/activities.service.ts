@@ -36,7 +36,7 @@ export class ActivitiesService {
     private readonly eventBus: EventBus,
 
     private readonly dataSource: DataSource,
-  ) { }
+  ) {}
 
   // ---------------- CREATE ----------------
   async create(params: {
@@ -59,9 +59,7 @@ export class ActivitiesService {
       where: { id: dto.location_id, club_id: clubId },
     });
     if (!locationExists) {
-      throw new BadRequestException(
-        'Location not found for this club',
-      );
+      throw new BadRequestException('Location not found for this club');
     }
 
     const activity = this.activityRepo.create({
@@ -131,10 +129,7 @@ export class ActivitiesService {
   }
 
   // ---------------- DETAIL ----------------
-  async findOne(params: {
-    id: string;
-    clubId: string;
-  }) {
+  async findOne(params: { id: string; clubId: string }) {
     const { id, clubId } = params;
 
     return this.activityRepo.findOne({
@@ -145,15 +140,10 @@ export class ActivitiesService {
     });
   }
   // ---------------- START (FINAL) ----------------
-  async start(params: {
-    id: string;
-    userId: string;
-    clubId: string;
-  }) {
+  async start(params: { id: string; userId: string; clubId: string }) {
     const { id, userId, clubId } = params;
 
     return this.dataSource.transaction(async (manager) => {
-
       const activity = await manager.findOne(Activity, {
         where: {
           id,
@@ -183,38 +173,26 @@ export class ActivitiesService {
         (gatheringDateTime.getTime() - now.getTime()) / (1000 * 60);
 
       if (diffMinutes > EARLY_START_LIMIT_MINUTES) {
-        throw new BadRequestException(
-          'Activity cannot be started yet',
-        );
+        throw new BadRequestException('Activity cannot be started yet');
       }
 
-      
       activity.status = activity_status_enum.ongoing;
       await manager.save(Activity, activity);
 
-      
-      const createCode = async (
-        type: responsibility_code_type_enum,
-      ) => {
+      const createCode = async (type: responsibility_code_type_enum) => {
         const MAX_RETRY = 5;
 
         for (let attempt = 0; attempt < MAX_RETRY; attempt++) {
           try {
             const code = generateResponsibilityCode();
 
-            const entity = manager.create(
-              ActivityResponsibilityCode,
-              {
-                activity_id: activity.id,
-                code,
-                type,
-              },
-            );
+            const entity = manager.create(ActivityResponsibilityCode, {
+              activity_id: activity.id,
+              code,
+              type,
+            });
 
-            return await manager.save(
-              ActivityResponsibilityCode,
-              entity,
-            );
+            return await manager.save(ActivityResponsibilityCode, entity);
           } catch (err: any) {
             // Unique constraint ihlali → retry
             if (err.code === '23505') {
@@ -251,15 +229,10 @@ export class ActivitiesService {
     });
   }
   // ---------------- COMPLETE ----------------
-  async complete(params: {
-    id: string;
-    userId: string;
-    clubId: string;
-  }) {
+  async complete(params: { id: string; userId: string; clubId: string }) {
     const { id, userId, clubId } = params;
 
     return this.dataSource.transaction(async (manager) => {
-
       const activity = await manager.findOne(Activity, {
         where: {
           id,
@@ -305,11 +278,7 @@ export class ActivitiesService {
     });
   }
   // ---------------- CANCEL ----------------
-  async cancel(params: {
-    id: string;
-    userId: string;
-    clubId: string;
-  }) {
+  async cancel(params: { id: string; userId: string; clubId: string }) {
     const { id, userId, clubId } = params;
 
     return this.dataSource.transaction(async (manager) => {
@@ -356,6 +325,4 @@ export class ActivitiesService {
       return activity;
     });
   }
-
-
 }

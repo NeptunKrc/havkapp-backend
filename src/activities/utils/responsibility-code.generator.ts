@@ -1,4 +1,3 @@
-
 //the kod oluşturucu
 const CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 const CODE_LENGTH = 4;

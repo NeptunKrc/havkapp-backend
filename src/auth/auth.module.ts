@@ -30,4 +30,4 @@ import { RefreshTokenRepository } from './repositories/refresh-token.repository'
 
   controllers: [AuthController],
 })
-export class AuthModule { }
+export class AuthModule {}

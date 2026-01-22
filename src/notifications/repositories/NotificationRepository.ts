@@ -4,9 +4,7 @@ import { NotificationResponseDto } from '../dto/notification-response.dto';
 import { UserNotification } from '../entities/user-notification.entity';
 import { Notification } from '../entities/notification.entity';
 
-export class NotificationRepository
-  implements INotificationRepository
-{
+export class NotificationRepository implements INotificationRepository {
   constructor(private readonly dataSource: DataSource) {}
 
   async findForUser(
@@ -35,23 +33,15 @@ export class NotificationRepository
     return qb.getRawMany<NotificationResponseDto>();
   }
 
-  async markAsRead(
-    userId: string,
-    notificationId: string,
-  ): Promise<void> {
+  async markAsRead(userId: string, notificationId: string): Promise<void> {
     await this.dataSource
       .getRepository(UserNotification)
-      .update(
-        { userId, notificationId },
-        { isRead: true },
-      );
+      .update({ userId, notificationId }, { isRead: true });
   }
 
   async unreadCount(userId: string): Promise<number> {
-    return this.dataSource
-      .getRepository(UserNotification)
-      .count({
-        where: { userId, isRead: false },
-      });
+    return this.dataSource.getRepository(UserNotification).count({
+      where: { userId, isRead: false },
+    });
   }
 }
