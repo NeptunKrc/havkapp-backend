@@ -9,6 +9,7 @@ import { ClubsModule } from './clubs/clubs.module';
 import { ActivitiesModule } from './activities/activities.module';
 import { CoreModule } from './core/core.module';
 import { QrModule } from './qr/qr.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -42,9 +43,10 @@ import { QrModule } from './qr/qr.module';
     ClubsModule,
     ActivitiesModule,
     CoreModule,
+    FilesModule,
 
     // INFRA MODULES
     QrModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }
