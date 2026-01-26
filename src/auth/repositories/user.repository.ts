@@ -10,15 +10,28 @@ export class UserRepository {
     private readonly repo: Repository<User>,
   ) {}
 
-  // login select false özel güvenlik durumu yoğun !!!
-  findForLogin(studentNo: string): Promise<User | null> {
+  // Explicitly select passwordHash since it's excluded by default for security
+  async findForLogin(studentNo: string): Promise<User | null> {
     return this.repo
       .createQueryBuilder('user')
       .addSelect('user.passwordHash')
       .where('user.studentNo = :studentNo', { studentNo })
       .getOne();
   }
-  findById(id: string): Promise<User | null> {
+
+  async findById(id: string): Promise<User | null> {
     return this.repo.findOne({ where: { id } });
+  }
+  async findByEmail(email: string): Promise<User | null> {
+    return this.repo.findOne({
+      where: { email },
+    });
+  }
+  async updatePassword(userId: string, passwordHash: string): Promise<void> {
+    await this.repo.update(userId, { passwordHash });
+  }
+
+  async clearForcePasswordChange(userId: string): Promise<void> {
+    await this.repo.update(userId, { forcePasswordChange: false });
   }
 }

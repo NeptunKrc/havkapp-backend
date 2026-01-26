@@ -27,7 +27,6 @@ import { Header } from '@nestjs/common';
 import { QrIdResponseDto, QrValidateResponseDto } from './dto/qr-response.dto';
 import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
 
-
 // Local request typing to satisfy TypeScript.
 
 interface AuthenticatedRequest extends Request {
@@ -65,8 +64,7 @@ export class QrController {
     });
   }
 
-
-// Validate (SCAN)
+  // Validate (SCAN)
 
   @Post('validate')
   @Throttle({ default: { limit: 10, ttl: 5 } })

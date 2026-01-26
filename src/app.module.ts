@@ -10,6 +10,7 @@ import { ActivitiesModule } from './activities/activities.module';
 import { CoreModule } from './core/core.module';
 import { QrModule } from './qr/qr.module';
 import { FilesModule } from './files/files.module';
+import { AppLoggerModule } from './core/logger';
 
 @Module({
   imports: [
@@ -17,6 +18,9 @@ import { FilesModule } from './files/files.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+
+    // LOGGING (Toggle Switch - ENV ile kontrol edilir)
+    AppLoggerModule,
 
     // RATE LIMIT (Required for @Throttle)
     ThrottlerModule.forRoot([

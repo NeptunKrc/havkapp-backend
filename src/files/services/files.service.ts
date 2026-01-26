@@ -17,17 +17,17 @@ import type { StorageAdapter } from '../storage/storage-adapter.interface';
 
 export type FileReadResult =
   | {
-    mode: 'redirect';
-    redirectUrl: string;
-    mimeType: string;
-    size: number;
-  }
+      mode: 'redirect';
+      redirectUrl: string;
+      mimeType: string;
+      size: number;
+    }
   | {
-    mode: 'stream';
-    stream: Readable;
-    mimeType: string;
-    size: number;
-  };
+      mode: 'stream';
+      stream: Readable;
+      mimeType: string;
+      size: number;
+    };
 
 @Injectable()
 export class FilesService {
@@ -39,7 +39,7 @@ export class FilesService {
     @Inject(STORAGE_ADAPTER)
     private readonly storage: StorageAdapter,
     private readonly dataSource: DataSource,
-  ) { }
+  ) {}
 
   async read(options: {
     fileId: string;
@@ -55,7 +55,14 @@ export class FilesService {
 
     const file = await this.filesRepo.findOne({
       where: { id: fileId, clubId },
-      select: ['id', 'status', 'storageKey', 'bucket', 'detectedMimeType', 'size'],
+      select: [
+        'id',
+        'status',
+        'storageKey',
+        'bucket',
+        'detectedMimeType',
+        'size',
+      ],
     });
 
     if (!file || file.status !== FileStatus.ATTACHED) {

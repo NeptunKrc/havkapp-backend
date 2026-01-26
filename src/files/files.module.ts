@@ -59,4 +59,4 @@ const storageAdapterFactory = {
   ],
   exports: [FileUploadService, FilesService],
 })
-export class FilesModule { }
+export class FilesModule {}

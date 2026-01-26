@@ -11,6 +11,8 @@ import { UserRepository } from './repositories/user.repository';
 import { JwtStrategy } from './jwt/jwt.strategy';
 import { ClubsModule } from 'src/clubs/clubs.module';
 import { RefreshTokenRepository } from './repositories/refresh-token.repository';
+import { PasswordResetToken } from './entities/password-reset-token.entity';
+import { PasswordResetTokenRepository } from './repositories/password-reset-token.repository';
 
 @Module({
   imports: [
@@ -23,10 +25,16 @@ import { RefreshTokenRepository } from './repositories/refresh-token.repository'
       }),
     }),
     ClubsModule,
-    TypeOrmModule.forFeature([User, RefreshToken]),
+    TypeOrmModule.forFeature([User, RefreshToken, PasswordResetToken]),
   ],
 
-  providers: [AuthService, UserRepository, JwtStrategy, RefreshTokenRepository],
+  providers: [
+    AuthService,
+    UserRepository,
+    JwtStrategy,
+    RefreshTokenRepository,
+    PasswordResetTokenRepository,
+  ],
 
   controllers: [AuthController],
 })

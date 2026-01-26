@@ -27,6 +27,9 @@ export class User {
   @Column({ name: 'password_hash', select: false })
   passwordHash: string;
 
+  @Column({ name: 'email', unique: true, length: 255 })
+  email: string;
+
   @Column({ name: 'club_id', type: 'uuid' })
   clubId: string;
 
@@ -41,6 +44,13 @@ export class User {
     default: MembershipStatus.ACTIVE,
   })
   membershipStatus: MembershipStatus;
+
+  @Column({
+    name: 'force_password_change',
+    type: 'boolean',
+    default: true,
+  })
+  forcePasswordChange: boolean;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

@@ -59,13 +59,13 @@ export class FileUploadService {
       allowed
         ? allowed.split(',').map((t) => t.trim())
         : [
-          'image/jpeg',
-          'image/png',
-          'image/gif',
-          'image/webp',
-          'application/pdf',
-          'text/plain',
-        ],
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/webp',
+            'application/pdf',
+            'text/plain',
+          ],
     );
 
     this.logger.log(
@@ -74,7 +74,10 @@ export class FileUploadService {
   }
 
   private resolveProvider(): StorageProvider {
-    const provider = this.configService.get<string>('STORAGE_PROVIDER', 'local');
+    const provider = this.configService.get<string>(
+      'STORAGE_PROVIDER',
+      'local',
+    );
     switch (provider.toLowerCase()) {
       case 'supabase':
         return StorageProvider.SUPABASE;
@@ -83,7 +86,9 @@ export class FileUploadService {
       case 'local':
         return StorageProvider.LOCAL;
       default:
-        this.logger.warn(`Unknown provider "${provider}", falling back to LOCAL`);
+        this.logger.warn(
+          `Unknown provider "${provider}", falling back to LOCAL`,
+        );
         return StorageProvider.LOCAL;
     }
   }
@@ -296,7 +301,10 @@ export class FileUploadService {
       });
     } catch (error) {
       await this.storage.delete(storageKey, options.bucket).catch((err) => {
-        this.logger.warn(`Cleanup failed after streaming error: ${storageKey}`, err);
+        this.logger.warn(
+          `Cleanup failed after streaming error: ${storageKey}`,
+          err,
+        );
       });
 
       this.logger.error('Streaming upload failed', error);

@@ -3,7 +3,7 @@ import * as QRCode from 'qrcode';
 export type QrImageFormat = 'svg' | 'png';
 
 export class QrImageGenerator {
-//Generate QR image dynamically based on ID payload qrId
+  //Generate QR image dynamically based on ID payload qrId
   static async generate(
     qrId: string,
     format: QrImageFormat = 'svg',
@@ -17,7 +17,7 @@ export class QrImageGenerator {
       });
     }
 
-// default = svg
+    // default = svg
     return QRCode.toString(qrId, {
       type: 'svg',
       errorCorrectionLevel: 'M',

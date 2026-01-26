@@ -15,7 +15,7 @@ export class RefreshTokenRepository {
     await this.repo.delete({ userId });
   }
 
-  create(data: {
+  async create(data: {
     userId: string;
     tokenHash: string;
     expiresAt: Date;
@@ -23,7 +23,8 @@ export class RefreshTokenRepository {
     const token = this.repo.create(data);
     return this.repo.save(token);
   }
-  findByTokenHash(tokenHash: string): Promise<RefreshToken | null> {
+
+  async findByTokenHash(tokenHash: string): Promise<RefreshToken | null> {
     return this.repo.findOne({ where: { tokenHash } });
   }
   async deleteExpired(now: Date): Promise<void> {

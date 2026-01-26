@@ -24,7 +24,7 @@ export class QrService {
       this.configService.get<string[]>('ALLOWED_QR_TYPES') ?? [];
   }
 
-//Create QR Same input same output
+  //Create QR Same input same output
   async createQr(
     params: {
       type: string;
@@ -69,7 +69,7 @@ export class QrService {
     }
   }
 
-//just vaildates QR, CLUB maybe removed later
+  //just vaildates QR, CLUB maybe removed later
   async validateQr(
     qrId: string,
     clubId: string,
@@ -98,7 +98,7 @@ export class QrService {
     };
   }
 
-//revoke QR
+  //revoke QR
   async revokeQr(
     qrId: string,
     revokedByUserId: string,
@@ -119,7 +119,7 @@ export class QrService {
     this.logger.warn(`QR revoked: qrId=${qrId} by user=${revokedByUserId}`);
   }
 
-//Interal type check
+  //Interal type check
   private assertTypeAllowed(type: string): void {
     if (!this.allowedTypes.includes(type)) {
       this.logger.warn(`QR type not allowed: ${type}`);

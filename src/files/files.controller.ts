@@ -35,7 +35,7 @@ export class FilesController {
   constructor(
     private readonly uploadService: FileUploadService,
     private readonly filesService: FilesService,
-  ) { }
+  ) {}
 
   @Post('upload')
   @HttpCode(HttpStatus.CREATED)
