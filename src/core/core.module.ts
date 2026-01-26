@@ -1,6 +1,7 @@
 import { Module, Global } from '@nestjs/common';
 import { EventBus } from './events/event-bus';
 import { InMemoryEventBus } from './events/in-memory-event-bus';
+import { CACHE_SERVICE, SimpleCacheService } from './cache';
 
 @Global()
 @Module({
@@ -9,7 +10,11 @@ import { InMemoryEventBus } from './events/in-memory-event-bus';
       provide: EventBus,
       useClass: InMemoryEventBus,
     },
+    {
+      provide: CACHE_SERVICE,
+      useClass: SimpleCacheService,
+    },
   ],
-  exports: [EventBus],
+  exports: [EventBus, CACHE_SERVICE],
 })
-export class CoreModule {}
+export class CoreModule { }
