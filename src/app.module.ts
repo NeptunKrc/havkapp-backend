@@ -11,6 +11,7 @@ import { CoreModule } from './core/core.module';
 import { QrModule } from './qr/qr.module';
 import { FilesModule } from './files/files.module';
 import { AppLoggerModule } from './core/logger';
+import { PermissionsModule } from './permissions/permissions.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { AppLoggerModule } from './core/logger';
 
     // DOMAIN MODULES
     AuthModule,
+    PermissionsModule,
     NotificationModule,
     ClubsModule,
     ActivitiesModule,

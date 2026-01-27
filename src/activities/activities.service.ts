@@ -36,7 +36,7 @@ export class ActivitiesService {
     private readonly eventBus: EventBus,
 
     private readonly dataSource: DataSource,
-  ) {}
+  ) { }
 
   // ---------------- CREATE ----------------
   async create(params: {
@@ -324,5 +324,21 @@ export class ActivitiesService {
 
       return activity;
     });
+  }
+
+  async isUserResponsible(userId: string, activityId: string): Promise<boolean> {
+    const result = await this.dataSource.query(
+      `
+      SELECT 1 FROM activity_responsibility_sessions ars
+      JOIN activities a ON a.id = ars.activity_id
+      WHERE ars.activity_id = $1 
+        AND ars.user_id = $2
+        AND a.status != 'completed'
+      LIMIT 1
+    `,
+      [activityId, userId],
+    );
+
+    return result.length > 0;
   }
 }

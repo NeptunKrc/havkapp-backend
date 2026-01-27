@@ -7,8 +7,10 @@ import {
   Index,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { Club } from '../../clubs/entities/club.entity';
+import { UserRole } from '../../permissions/entities/user-role.entity';
 
 export enum MembershipStatus {
   ACTIVE = 'active',
@@ -36,6 +38,15 @@ export class User {
   @ManyToOne(() => Club, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'club_id' })
   club: Club;
+
+  @OneToMany(() => UserRole, (userRole) => userRole.user)
+  roles: UserRole[];
+
+  @Column({ name: 'is_sys_admin', type: 'boolean', default: false })
+  isSysAdmin: boolean;
+
+  @Column({ name: 'is_club_owner', type: 'boolean', default: false })
+  isClubOwner: boolean;
 
   @Column({
     name: 'membership_status',

@@ -8,7 +8,7 @@ export class UserRepository {
   constructor(
     @InjectRepository(User)
     private readonly repo: Repository<User>,
-  ) {}
+  ) { }
 
   // Explicitly select passwordHash since it's excluded by default for security
   async findForLogin(studentNo: string): Promise<User | null> {
@@ -29,6 +29,13 @@ export class UserRepository {
   }
   async updatePassword(userId: string, passwordHash: string): Promise<void> {
     await this.repo.update(userId, { passwordHash });
+  }
+
+  async findWithRoles(id: string): Promise<User | null> {
+    return this.repo.findOne({
+      where: { id },
+      relations: ['roles'],
+    });
   }
 
   async clearForcePasswordChange(userId: string): Promise<void> {
